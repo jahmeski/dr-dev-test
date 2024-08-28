@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('events', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->integer('duration'); // Duration in minutes
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }
