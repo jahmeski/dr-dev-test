@@ -17,7 +17,7 @@ class BookingFeatureTest extends TestCase
         $user = User::factory()->create();
         $event = Event::factory()->create();
 
-        $response = $this->actingAs($user)->post('/bookings', [
+        $response = $this->actingAs($user)->post('/events/' . $event->id . '/book', [
             'event_id' => $event->id,
             'booking_time' => now(),
             'booking_date' => now()->format('Y-m-d'),
@@ -26,9 +26,8 @@ class BookingFeatureTest extends TestCase
 
         ]);
 
-        $response->assertSee('Thank You');
-        $response->assertSee('test@test.com');
-        $response->assertSee('Best Tester');
+        $response->assertSee('Thank You!');
+        $response->assertSee($event->name);
     }
 
     public function testBookingCollisionDetection() {}
