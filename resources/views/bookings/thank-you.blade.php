@@ -1,6 +1,6 @@
 <x-guest-layout>
     <div class="flex items-center justify-center bg-gray-100">
-        <div class="bg-white p-8 rounded-lg shadow-lg max-w-lg w-full">
+        <div class="bg-white p-8 max-w-lg w-full">
             <h1 class="text-3xl font-bold mb-4 text-center text-green-600">Thank You!</h1>
             <p class="text-lg mb-4 text-gray-700 text-center">
                 Your booking has been successfully created.

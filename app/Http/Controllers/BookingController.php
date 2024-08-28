@@ -36,15 +36,15 @@ class BookingController extends Controller
         $event = Event::findOrFail($eventId);
         $selectedDate = $request->input('booking_date', now()->toDateString());
 
-        $timeSlots = $this->generateTimeSlots($event, $selectedDate);
+        $timeSlots = $this->generateTimeSlots($selectedDate);
 
         return view('bookings.calendar', compact('event', 'timeSlots', 'selectedDate'));
     }
 
-    private function generateTimeSlots(Event $event, $date)
+    private function generateTimeSlots($date)
     {
-        $startOfDay = Carbon::parse($date)->startOfDay()->addHours(8); // Assuming bookings start at 8 AM
-        $endOfDay = Carbon::parse($date)->startOfDay()->addHours(20); // End at 8 PM
+        $startOfDay = Carbon::parse($date)->startOfDay();
+        $endOfDay = Carbon::parse($date)->startOfDay()->addHours(24);
         $interval = 30; // 30 minutes per time block
 
         $timeSlots = [];
@@ -54,23 +54,11 @@ class BookingController extends Controller
 
             $timeSlots[] = [
                 'time' => $startOfDay->format('H:i'),
-                'available' => $this->isTimeSlotAvailable($event, $date, $startOfDay->format('H:i')),
             ];
 
             $startOfDay = $end;
         }
 
         return $timeSlots;
-    }
-
-    private function isTimeSlotAvailable(Event $event, $date, $time)
-    {
-        // Add your logic to check if the time slot is available
-        $booking = Booking::where('event_id', $event->id)
-            ->where('booking_date', $date)
-            ->where('booking_time', $time)
-            ->first();
-
-        return $booking === null;
     }
 }

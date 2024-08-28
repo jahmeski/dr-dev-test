@@ -14,18 +14,14 @@
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 @foreach ($timeSlots as $time)
-                    <div class="border p-4 rounded-lg {{ $time['available'] ? 'bg-green-100' : 'bg-gray-200' }}">
+                    <div class="border p-4 rounded-lg 'bg-green-100' }}">
                         <span class="text-lg font-medium">{{ $time['time'] }}</span>
-                        @if ($time['available'])
-                            <form action="{{ route('bookings.create', $event->id) }}" method="GET" class="mt-2">
-                                <input type="hidden" name="booking_date" value="{{ $selectedDate }}">
-                                <input type="hidden" name="booking_time" value="{{ $time['time'] }}">
-                                <button type="submit"
-                                    class="w-full px-4 py-2 bg-blue-600 text-white rounded">Select</button>
-                            </form>
-                        @else
-                            <p class="text-gray-500">Unavailable</p>
-                        @endif
+                        <form action="{{ route('bookings.create', $event->id) }}" method="GET" class="mt-2">
+                            <input type="hidden" name="booking_date" value="{{ $selectedDate }}">
+                            <input type="hidden" name="booking_time" value="{{ $time['time'] }}">
+                            <button type="submit"
+                                class="w-full px-4 py-2 bg-blue-600 text-white rounded">Select</button>
+                        </form>
                     </div>
                 @endforeach
             </div>
